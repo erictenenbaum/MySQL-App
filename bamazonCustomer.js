@@ -86,6 +86,7 @@ function checkAvailability(item, quantity) {
 
 			else {
 				console.log("Sorry, insufficient quantity!");
+				continuePrompt();
 			}
 	})
 }

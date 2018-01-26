@@ -104,9 +104,27 @@ function addInventory(userChoice) {
             })
            }
 
-            function addProduct() {
+           function getDepartments() {
+             connection.query("SELECT department_name FROM departments", function(error, results, fields) {
+                        // console.log(results);
 
-                inquirer.prompt([ /* Pass your questions in here */ {
+                        var resultsArray = [];
+
+                        for (let i = 0; i < results.length; i++) {
+                            resultsArray.push(results[i].department_name);
+                        }
+
+                        addProduct(resultsArray);
+                        
+                    })
+                
+           }
+
+            function addProduct(departments) {
+
+                // console.log(departments);
+
+                    inquirer.prompt([ /* Pass your questions in here */ {
                     type: "input",
                     message: "What product would you like to add",
                     name: "addedProdcut"
@@ -120,7 +138,7 @@ function addInventory(userChoice) {
                 }, {
                     type: "list",
                     message: "What department will this be added to?",
-                    choices: ["electronics", "apperel"],
+                    choices: departments,
                     name: "addedDepartment"
 
                 }, {
@@ -130,8 +148,7 @@ function addInventory(userChoice) {
                 }]).then(answers => {
                     // Use user feedback for... whatever!!
 
-                    // console.log(answers.addedProdcut);
-                    // console.log(answers.addedUnits);
+                   
 
                     if (Number.isInteger(parseInt(answers.addedUnits)) && Number.isInteger(parseInt(answers.addedPrice))) {
                         // console.log(answers.addedUnits);
@@ -153,6 +170,10 @@ function addInventory(userChoice) {
 
                 });
 
+
+                
+
+                
 
             }
 
@@ -197,7 +218,7 @@ function addInventory(userChoice) {
                             break;
 
                         case "Add New Product":
-                            addProduct();
+                            getDepartments();
                             break;
 
                         default:
@@ -213,7 +234,8 @@ function addInventory(userChoice) {
             function startApp() {
                 connection.connect(function(err) {
                     if (err) throw err;
-                    promptManager();
+                    promptManager();                                      
+                    
                 })
             }
 
