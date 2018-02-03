@@ -18,7 +18,7 @@ function viewSalesByDepartment() {
         " SUM(p.product_sales) AS total_product_sales, " +
         " SUM(p.product_sales) - SUM(d.over_head_cost) AS total_profit " +
         " FROM departments d " +
-        " JOIN products p ON " +
+        " INNER JOIN products p ON " +
         " d.department_name = p.department_name " +
         " GROUP BY d.department_id;",
         function(error, results, fields) {
